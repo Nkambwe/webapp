@@ -1,0 +1,247 @@
+﻿<!--container for child pages-->
+<div id="page-overlay">
+    <div id="inner-parent-container" class="page-child-container"></div>
+</div>
+
+<div id="pageid" class="container-fluid app-page">
+
+    <div class="page-top">
+
+        <div class="back-container">
+            <button class="btn-back" data-back="back">
+                <span><i class="mdi mdi-arrow-left"></i></span>
+            </button>
+        </div>
+
+        <div class="page-top-header-container">
+            <span class="page-top-header">
+                Page Header
+            </span>
+        </div>
+
+        <div class="expand-container">
+            <button class="btn-expand" data-expand="expand">
+                <span>
+                    <i class="mdi mdi-arrow-expand hide-icon"></i>
+                    <i class="mdi mdi-arrow-collapse"></i>
+                </span>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="page-header">
+
+        <div class="page-header-left">
+
+            <ul class="page-header-menu">
+
+                <li class="page-header-menu-item">
+                    <button class="page-menu-button" data-partial="_SearchPartial">
+                        <span>
+                            <i class="mdi mdi-magnify"></i>
+                        </span>
+                        <span>Search</span>
+                    </button>
+                </li>
+
+                <li class="page-header-menu-item">
+                    <button class="page-menu-button" data-partial="_NewPartial">
+                        <span>
+                            <i class="mdi mdi-plus"></i>
+                        </span>
+                        <span>New</span>
+                    </button>
+                </li>
+
+                <li class="page-header-menu-item">
+                    <button>
+                        <span>
+                            <i class="mdi mdi-script-text-play"></i>
+                        </span>
+                        <span>Edit List</span>
+                    </button>
+                </li>
+
+                <li class="page-header-menu-item">
+                    <button>
+                        <span>
+                            <i class="mdi mdi-window-close"></i>
+                        </span>
+                        <span>Delete</span>
+                    </button>
+                </li>
+
+                <li class="page-header-menu-item">
+                    <button class="page-menu-button" data-partial="_ManagePartial">
+                        <span>
+                            <i class="mdi mdi-cog-counterclockwise"></i>
+                        </span>
+                        <span>Manage</span>
+                    </button>
+                </li>
+
+                <li class="page-header-menu-item">
+                    <button class="page-menu-button" data-partial="_ProcessPartial">
+                        <span>
+                            <i class="mdi mdi-cog-transfer-outline"></i>
+                        </span>
+                        <span>Process</span>
+                    </button>
+                </li>
+
+                <li class="page-header-menu-item">
+                    <button class="page-menu-button" data-partial="_reportPartial">
+                        <span>
+                            <i class="mdi mdi-file-document-multiple-outline"></i>
+                        </span>
+                        <span>Report</span>
+                    </button>
+                </li>
+
+                <li class="page-header-menu-item">
+                    <button class="page-menu-button" data-partial="_AttachmentPartial">
+                        <span>
+                            <i class="mdi mdi-attachment"></i>
+                        </span>
+                        <span>Show Attached</span>
+                    </button>
+                </li>
+
+                <li class="page-header-menu-item">
+                    <button>
+                        <span>
+                            <i class="mdi mdi-microsoft-excel"></i>
+                        </span>
+                        <span>Open in Excel</span>
+                    </button>
+                </li>
+
+                <li class="page-header-menu-item menu-item-seperator-left">
+                    <button>Actions</button>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="page-header-right">
+            <ul class="page-header-menu">
+                <li class="page-header-menu-item">
+                    <button id="btnfilter">
+                        <span>
+                            <i class="mdi mdi-filter-outline"></i>
+                        </span>
+                    </button>
+                </li>
+                <li class="page-header-menu-item">
+                    <button id="btninfo">
+                        <span>
+                            <i class="mdi mdi-information-outline"></i>
+                        </span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+
+    <div class="page-content">
+
+        <div class="content-filter">
+            <span class="display-4">Filter Pane</span>
+        </div>
+
+        <div class="content-box">
+            <span class="display-4">Main Content</span>
+        </div>
+
+        <div class="content-info">
+            <span class="display-4">Info Pane</span>
+        </div>
+
+    </div>
+    
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.btn-back').click(function () {
+            const backFunc = $(this).data('back');
+            if (typeof window[backFunc] === 'function') {
+                window[backFunc]();
+            } else {
+                console.log('Function not found');
+            }
+        });
+
+        $('.btn-expand').click(function () {
+            //..switch icons
+            $(this).find('.mdi').toggleClass('hide-icon');
+            $(this).closest('.page-container').toggleClass('expand-page');
+        });
+
+        $('#btnfilter').on('click', function () {
+            $('#btnfilter').toggleClass('filter-active');
+            $('.content-filter').toggleClass('show-filter');
+
+            var container = $('.page-content');
+            if ($('.content-filter').hasClass('show-filter')) {
+
+                if ($('.content-info').hasClass('show-info')) {
+                    $('.content-info').removeClass('show-info');
+                    $('#btninfo').removeClass('info-active');
+                }
+
+                container.attr('data-pane', 'show-filter');
+            } else {
+                container.removeAttr('data-pane');
+            }
+        });
+
+        $('#btninfo').on('click', function () {
+            $('#btninfo').toggleClass('info-active');
+            $('.content-info').toggleClass('show-info');
+
+            var container = $('.page-content');
+            if ($('.content-info').hasClass('show-info')) {
+
+                if ($('.content-filter').hasClass('show-filter')) {
+                    $('.content-filter').removeClass('show-filter');
+                    $('#btnfilter').removeClass('filter-active');
+                }
+                container.attr('data-pane', 'show-info');
+            } else {
+                container.removeAttr('data-pane');
+            }
+        });
+
+        $(".page-menu-button").click(function () {
+
+            const partialName = $(this).data('partial');
+            $('.page-child-container').load('/Next/LoadPageView?partialName=' + partialName);
+
+            //..display overlay
+            childOn();
+
+            //..slide in page
+            $('.page-child-container').addClass('show-page');
+            $('#parent-container').attr('data-child', 'has-child');
+        });
+    });
+
+    function childOn() {
+        $("#page-overlay").css('display', 'block');
+    };
+
+    function back() {
+        $("#overlay").css('display', 'none');
+    };
+
+    function expand() {
+        $(".app-page").toggleClass('expand');
+    };
+
+</script>

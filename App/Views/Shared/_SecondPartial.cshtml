@@ -1,0 +1,62 @@
+﻿<div id="pageid" class="container-fluid app-page">
+
+    <div class="page-top">
+
+        <div class="back-container">
+            <button class="btn-back" data-back="back">
+                <span><i class="mdi mdi-arrow-left"></i></span>
+            </button>
+        </div>
+
+        <div class="page-top-header-container">
+            <span class="page-top-header">
+                Page Header
+            </span>
+        </div>
+
+        <div class="expand-container">
+            <button class="btn-expand" data-expand="expand">
+                <span>
+                    <i class="mdi mdi-arrow-expand"></i>
+                    <i class="mdi mdi-arrow-collapse hide-icon"></i>
+                </span>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="page-content">
+        <span class="display-6">Second Partial View</span>
+    </div>
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.btn-back').click(function () {
+            const backFunc = $(this).data('back');
+            if (typeof window[backFunc] === 'function') {
+                window[backFunc]();
+            } else {
+                console.log('Function not found');
+            }
+        });
+
+        $('.btn-expand').click(function () {
+            //..switch icons
+            $(this).find('.mdi').toggleClass('hide-icon');
+            $(this).closest('.page-container').toggleClass('expand-page');
+        });
+    });
+
+    function back() {
+        $("#overlay").css('display', 'none');
+    };
+
+    function expand() {
+        $(".app-page").toggleClass('expand');
+    };
+
+</script>
